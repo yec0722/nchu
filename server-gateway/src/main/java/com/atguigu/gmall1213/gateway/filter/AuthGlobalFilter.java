@@ -141,6 +141,7 @@ public class AuthGlobalFilter implements GlobalFilter {
             String userJson = (String) redisTemplate.opsForValue().get(userKey);
             JSONObject jsonObject = JSONObject.parseObject(userJson);
             //获取当时登录时的ip地址    它是放在缓存中的
+
             String ip = jsonObject.getString("ip");
             //获取现在使用的电脑的Ip地址
             String curIp = IpUtil.getGatwayIpAddress(request);

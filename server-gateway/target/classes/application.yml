@@ -50,6 +50,12 @@ spring:
           uri: lb://service-activity
           predicates:
             - Path=/*/activity/** # 路径匹配
+          filters:
+            - name: RequestRateLimiter #filter名称必须是RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 2 #允许用户每秒处理多少个请求
+                redis-rate-limiter.burstCapacity: 2 #令牌桶的容量，允许在一秒钟内完成的最大请求数
+                key-resolver: "#{@ipKeyResolver}" # 遵循哪个限流规则！
         #==================web前端==========================
         - id: web-item  # 唯一标识
           uri: lb://web-all # 负载均衡服务
